@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="form-group row"><h3>Add a new part</h3></div>
+    <form th:action="@{/addpart}" th:object="${part}" method="post">
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Part name</label>
+            <div class="col-sm-6">
+                <input type="text" name="name" class="form-control" th:field="*{name}" id="name"  placeholder="Enter part name" required/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="needed" class="col-sm-2 col-form-label">Needed</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="needed" id="needed" th:field="*{needed}">
+                    <option value="false">no</option>
+                    <option value="true">yes</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+            <div class="col-sm-6">
+                <input type="number" name="amount" class="form-control" th:field="*{amount}" id="amount"  placeholder="Enter amount" min="0" required/>
+            </div>
+        </div>
+        <a href="/">Go home</a>
+        <button type="submit" class="btn btn-primary">Add</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

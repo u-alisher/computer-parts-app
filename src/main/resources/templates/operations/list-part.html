@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body>
+
+<!-- main container -->
+<div class="container mt-3" th:fragment="parts">
+    <p></p><b><h3 align="center">Computer parts storage</h3></b>
+
+    <!-- Table of parts -->
+    <div class="row" th:list="${parts}">
+            <table class="table table-bordered table-hover horizontal-align table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width: 55%; text-align: center">Name</th>
+                    <th scope="col" style="width: 15%; text-align: center">Necessary</th>
+                    <th scope="col" style="width: 10%; text-align: center">Amount</th>
+                    <th scope="col" style="width: 10%; text-align: center">Edit</th>
+                    <th scope="col" style="width: 10%; text-align: center">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="part : ${parts}">
+                    <td th:text="${part.name}"></td>
+                    <td th:text="${part.needed}" style="text-align: center"></td>
+                    <td th:text="${part.amount}" style="text-align: center"></td>
+                    <td style="text-align: center"><a th:href="@{/edit/{id}(id=${part.id})}"><i class="fa fa-edit" style="font-size:20px"></i></a></td>
+                    <td style="text-align: center"><a th:href="@{/delete/{id}(id=${part.id})}"><i class="fa fa-trash" style="font-size:20px"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+
+    <!-- amount of computers -->
+    <div class="row">
+        <table class="table table-bordered table-dark">
+            <tbody>
+            <td style="width: 55%">Possible to assemble:</td>
+            <td style="width: 15%"; th:text="${computers}" align="center"></td>
+            <td style="width: 30%">computer(s).</td>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- pagination -->
+    <div class="row justify-content-center">
+            <ul class="pagination" th:if="${parts.getTotalElements()} gt 0">
+                <li class="page-item disabled">
+                    <span class="page-link" th:if="!${parts.hasPrevious()}">
+                    Previous
+                    </span>
+                </li>
+                <li>
+                    <span th:if="${parts.hasPrevious()}">
+                    <a class="page-link" th:href="@{/(page=${parts.number - 1},size=${parts.size})}">Previous</a>
+                    </span>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(0, parts.totalPages - 1)}">
+                    <span th:if="${parts.number == i}" class="page-link">[[${i}+1]]</span>
+                    <span th:unless="${parts.number == i}">
+                        <a class="page-link" th:href="@{/(page=${i},size=${parts.size})}">[[${i}+1]]</a>
+                    </span>
+                </li>
+                <li>
+                    <span th:if="${parts.hasNext()}">
+                        <a class="page-link" th:href="@{/(page=${parts.number+1},size=${parts.size})}">Next</a>
+                    </span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link" th:if="!${parts.hasNext()}">
+                    Next
+                    </span>
+                </li>
+            </ul>
+</div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
